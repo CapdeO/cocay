@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sectionPaddings {
+    @apply px-mobile sm:px-tablet md:px-desktop
+}
+
+.subtitle {
+    @apply text-secondary uppercase font-semibold
+}
+
+.button-with-border {
+    border-radius: 20px;
+    border-width: 2px;
+    border-color: #945D1C;
+    color: #945D1C;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
