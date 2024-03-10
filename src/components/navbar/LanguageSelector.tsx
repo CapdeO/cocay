@@ -8,7 +8,9 @@ import {
 const LanguageSelector = () => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>Lenguaje</DropdownMenuTrigger>
+      <DropdownMenuTrigger className="text-xl">
+        ES <span className="ml-2">▼</span>
+      </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem>Español</DropdownMenuItem>
         <DropdownMenuItem>Inglés</DropdownMenuItem>
