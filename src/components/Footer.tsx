@@ -21,7 +21,7 @@ const Footer = () => {
           </ul>
         </div>
         <div className="h-[1px] bg-[rgb(0,0,0)] bg-opacity-60 w-[95%] mt-4" />
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 py-[48px]">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-8 py-[48px] w-full">
           <p>Copyright Cocay Token 2024. Nicosia, Chipre </p>
         </div>
       </div>

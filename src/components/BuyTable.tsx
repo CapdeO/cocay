@@ -12,6 +12,9 @@ const BuyTable = () => {
   return (
     <section className="w-full sectionPaddings pt-[30px] flex flex-col items-center gap-24">
       <form className="border-2 border-secondary rounded-[32px] w-full max-w-maxSectionWidth flex flex-col gap-[40px] items-center px-[10px] py-[20px]">
+        <h1 className="text-3xl text-secondary font-semibold text-center">
+          Quedan X tokens de Cocay de 200.000
+        </h1>
         <DropdownMenu>
           <DropdownMenuTrigger className="bg-secondary rounded-[32px] px-4 py-2 text-primary w-full max-w-[400px]">
             Criptomoneda: {selected} <span className="ml-2">▼</span>
