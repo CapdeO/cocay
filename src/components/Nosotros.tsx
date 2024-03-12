@@ -14,31 +14,34 @@ const Nosotros = () => {
           <AccordionItem value="item-1" className="border-b-black">
             <AccordionTrigger>¿Quienes Somos?</AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              (AI solves) Primer desarrollo web3 con venta en restaurant
+              totalmente descentralizado en Playa del Carmen, Mexico.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2" className="border-b-black">
             <AccordionTrigger>¿Quien es la constructora?</AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Con 22 años de experiencia, construyendo los inmuebles mas
+              rápidos, de calidad y con tiempos insuperables. Lo mejor en
+              costo/beneficio.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3" className="border-b-black">
             <AccordionTrigger>Razón de negocio</AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Colocar tokens para compra de tierras en Tulum, urbanizar,
+              fraccionar y vender para obtener el doble del recurso.
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-4" className="border-b-black">
             <AccordionTrigger>Tiempos</AccordionTrigger>
-            <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
-            </AccordionContent>
+            <AccordionContent>48 meses</AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-5" className="border-b-black">
             <AccordionTrigger>Como</AccordionTrigger>
             <AccordionContent>
-              Yes. It adheres to the WAI-ARIA design pattern.
+              Adquieres desde 1 token hasta 200,000 tokens. Y recibe el doble de
+              tokens terminado el proyecto.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
