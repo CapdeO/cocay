@@ -4,20 +4,55 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Web3Button } from "@thirdweb-dev/react";
+import { ThirdwebSDK, Web3Button, useSigner } from "@thirdweb-dev/react";
 import { useRef, useState } from "react";
 import abi from '../abis/icoAbi.json'
-
-
+import abiUsdt from '../abis/abiUsdt.json'
+import { PolygonAmoyTestnet } from "@thirdweb-dev/chains";
+import { ethers } from "ethers";
 
 
 const BuyTable = () => {
   //USDT es la moneda por defecto
   const [selected, setSelected] = useState("USDT");
+  const [changeCalculator, setChangeCalculator] = useState(0)
+  const [aprobar, setAprobar] = useState(false)
 
-  const sponsorCode = useRef()
-  const valueToBuy = useRef()
+  const sponsorCode = useRef<HTMLInputElement>(null);
+  const valueToBuy = useRef<HTMLInputElement>(null);
+  const cantUsdt = useRef<HTMLInputElement>(null);
+  const signer = useSigner() 
 
+
+  const aprobarTokens = async() =>{
+    console.log(signer)
+    const sdk = ThirdwebSDK.fromSigner(signer, PolygonAmoyTestnet);
+    const contractMain = await sdk.getContract(
+      "0x55d398326f99059ff775485246999027b3197955", 
+      abiUsdt,
+    );
+     await contractMain.call(
+      "approve", 
+      ["0xEe3747b0a671495aecBA5E38e455eAb8622658f0",10000000000]
+    );
+    setAprobar(true)
+  }
+
+
+
+  const buyTokens = async() =>{
+    console.log(signer)
+    const sdk = ThirdwebSDK.fromSigner(signer, PolygonAmoyTestnet);
+    const contractMain = await sdk.getContract(
+      "0xEe3747b0a671495aecBA5E38e455eAb8622658f0", 
+      abi,
+    );
+      console.log(ethers.utils.parseEther(valueToBuy.current.value.toString()))
+     await contractMain.call(
+      "buyCocays", 
+      [ethers.utils.parseEther(valueToBuy.current?.value.toString()),sponsorCode.current?.value]
+    );
+  }
 
   return (
     <section className="w-full sectionPaddings pt-[30px] flex flex-col items-center gap-24">
@@ -59,50 +94,40 @@ const BuyTable = () => {
           <p className="text-xl font-semibold">Calculardora:</p>
           <div className="flex flex-col sm:flex-row items-center gap-2">
             <input
+            onChange={() => {setChangeCalculator(cantUsdt.current?.value)}}
+            ref={cantUsdt}
               type="number"
               placeholder="USD"
               className="border-2 border-secondary bg-secondary bg-opacity-70 text-white placeholder:text-white placeholder:text-opacity-60 px-4 py-2 rounded-[32px] w-full max-w-[200px]"
             />
             <p> = </p>
             <input
+            value={changeCalculator}
               type="number"
               placeholder="Tokens"
               className="border-2 border-secondary bg-secondary bg-opacity-70 text-white placeholder:text-white placeholder:text-opacity-60 px-4 py-2 rounded-[32px] w-full max-w-[200px]"
             />
           </div>
         </div>
-       {/* <button type="submit" className="button-with-border">
-          Comprar Ahora
-            </button>*/}
-                     <Web3Button
-                     className="button-with-border"
-          //  contractAddress="0x0cda7c31216405d997479f3e0219a5d9f3d9909c"
-          contractAddress="0xe6e943948429bC4eE175512ed56695a3e60dC825"
-          contractAbi={abi}
-          action={async (contract) => {
-              console.log(valueToBuy.current.value)
-              console.log(sponsorCode.current.value)
-            
-                await contract.call("buyCocays", [valueToBuy.current.value,sponsorCode.current.value])
-
-          }}
-          onSuccess={(result) => alert("Success!")}
-          onError={(error) => alert(`Error --> ${error.message}`)}
-        >
-        Comprar ahora
-        </Web3Button>
+        {
+          aprobar
+              ?
+              <div onClick={buyTokens} className="button-with-border">Comprar ahora</div>
+              :
+       <div onClick={aprobarTokens} className="button-with-border">Aprobar gastos</div>     
+        }
+     
       </form>
     </section>
   );
 };
-
 export default BuyTable;
 
 const criptomonedas = [
   {
     nombre: "USDT",
   },
-  {
+ /* {
     nombre: "BNB",
   },
   {
@@ -110,5 +135,5 @@ const criptomonedas = [
   },
   {
     nombre: "TRON",
-  },
+  },*/
 ];
