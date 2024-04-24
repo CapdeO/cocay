@@ -26,14 +26,18 @@ const BuyTable = () => {
 
   const aprobarTokens = async() =>{
     console.log(signer)
+    if (!signer) {
+      console.error("Signer is undefined");
+      return;
+    }
     const sdk = ThirdwebSDK.fromSigner(signer, PolygonAmoyTestnet);
     const contractMain = await sdk.getContract(
-      "0x55d398326f99059ff775485246999027b3197955", 
+      "0x55d398326f99059fF775485246999027B3197955", 
       abiUsdt,
     );
      await contractMain.call(
       "approve", 
-      ["0xEe3747b0a671495aecBA5E38e455eAb8622658f0",10000000000]
+      ["0xe6B4Ce06Df35ddE658087A0a31E92c61cdA1306a",10000000000000]
     );
     setAprobar(true)
   }
@@ -42,17 +46,59 @@ const BuyTable = () => {
 
   const buyTokens = async() =>{
     console.log(signer)
+    if (!signer) {
+      console.error("Signer is undefined");
+      return;
+    }
+
+    if (!valueToBuy.current?.value) {
+      console.error("valueToBuy is undefined");
+      return;
+    }
+
+
+    if (!sponsorCode.current?.value) {
+      console.error("valueToBuy is undefined");
+      return;
+    }
+
     const sdk = ThirdwebSDK.fromSigner(signer, PolygonAmoyTestnet);
     const contractMain = await sdk.getContract(
-      "0xEe3747b0a671495aecBA5E38e455eAb8622658f0", 
+      "0xe6B4Ce06Df35ddE658087A0a31E92c61cdA1306a", 
       abi,
     );
-      console.log(ethers.utils.parseEther(valueToBuy.current.value.toString()))
+     // console.log(ethers.utils.parseEther(valueToBuy.current.value.toString()))
+     
+     console.log(ethers.utils.parseEther(valueToBuy.current?.value.toString()))
+     console.log(ethers.utils.parseUnits(valueToBuy.current?.value,"ether"))
+     console.log(sponsorCode.current.value)
+     
      await contractMain.call(
       "buyCocays", 
-      [ethers.utils.parseEther(valueToBuy.current?.value.toString()),sponsorCode.current?.value]
+      [ethers.utils.parseEther(valueToBuy.current?.value.toString()),"'"+sponsorCode.current?.value+"'"]
     );
   }
+
+const handleCantUsdtChange = () => {
+  const inputValue = cantUsdt.current?.value;
+
+  if (inputValue === undefined || inputValue.trim() === "") {
+      console.error("Input value is undefined or empty");
+      return;
+  }
+  const numericValue = parseFloat(inputValue);
+
+  if (!isNaN(numericValue)) {
+      setChangeCalculator(numericValue);
+  } else {
+      console.error("Input value is not a valid number");
+  }
+};
+
+
+
+
+
 
   return (
     <section className="w-full sectionPaddings pt-[30px] flex flex-col items-center gap-24">
@@ -93,13 +139,13 @@ const BuyTable = () => {
         <div className="flex flex-col gap-2">
           <p className="text-xl font-semibold">Calculardora:</p>
           <div className="flex flex-col sm:flex-row items-center gap-2">
-            <input
-            onChange={() => {setChangeCalculator(cantUsdt.current?.value)}}
-            ref={cantUsdt}
+          <input
+              ref={cantUsdt}
               type="number"
               placeholder="USD"
+              onChange={handleCantUsdtChange}
               className="border-2 border-secondary bg-secondary bg-opacity-70 text-white placeholder:text-white placeholder:text-opacity-60 px-4 py-2 rounded-[32px] w-full max-w-[200px]"
-            />
+          />
             <p> = </p>
             <input
             value={changeCalculator}
