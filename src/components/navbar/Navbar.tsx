@@ -7,6 +7,7 @@ const Navbar = () => {
       <div className="w-full max-w-maxSectionWidth flex justify-between items-center sectionPaddings">
         <LanguageSelector />
         <ConnectWallet />
+        
       </div>
     </nav>
   );
