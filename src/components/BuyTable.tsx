@@ -25,6 +25,15 @@ const BuyTable = () => {
 
 
   const aprobarTokens = async() =>{
+
+    if (!valueToBuy.current?.value) {
+      console.error("valueToBuy is undefined");
+      return;
+    }
+
+    const valueToBuyValue = valueToBuy.current.value;
+    const valueToBuyInTokens = ethers.utils.parseEther(valueToBuyValue);
+
     console.log(signer)
     if (!signer) {
       console.error("Signer is undefined");
@@ -37,7 +46,7 @@ const BuyTable = () => {
     );
      await contractMain.call(
       "approve", 
-      ["0xe6B4Ce06Df35ddE658087A0a31E92c61cdA1306a",10000000000000]
+      ["0xe6B4Ce06Df35ddE658087A0a31E92c61cdA1306a", valueToBuyInTokens ]
     );
     setAprobar(true)
   }
