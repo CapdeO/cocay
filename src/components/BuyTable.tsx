@@ -65,11 +65,16 @@ const BuyTable = () => {
       return;
     }
 
+    const valueToBuyValue = valueToBuy.current.value;
+    const valueToBuyInTokens = ethers.utils.parseEther(valueToBuyValue);
 
     if (!sponsorCode.current?.value) {
-      console.error("valueToBuy is undefined");
+      console.error("sponsorCode is undefined");
       return;
     }
+
+    const sponsorCodeValue = sponsorCode.current?.value
+    console.log(sponsorCodeValue)
 
     const sdk = ThirdwebSDK.fromSigner(signer, PolygonAmoyTestnet);
     const contractMain = await sdk.getContract(
@@ -84,7 +89,7 @@ const BuyTable = () => {
      
      await contractMain.call(
       "buyCocays", 
-      [ethers.utils.parseEther(valueToBuy.current?.value.toString()),"'"+sponsorCode.current?.value+"'"]
+      [valueToBuyInTokens, sponsorCodeValue]
     );
   }
 
